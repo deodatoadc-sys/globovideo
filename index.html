@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vistoria de Salas de Reunião</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Vistoria de Salas de Reunião</h1>
+      <p>Checklist operacional para áudio, vídeo, conteúdo, iluminação, ar-condicionado e ramal.</p>
+    </div>
+    <button id="btnExportar" class="secondary">Exportar vistorias CSV</button>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Nova vistoria</h2>
+      <form id="formVistoria">
+        <div class="grid two">
+          <label>Prédio
+            <select id="predio" name="predio" required></select>
+          </label>
+          <label>Sala
+            <select id="sala" name="sala" required></select>
+          </label>
+        </div>
+
+        <div class="grid two">
+          <label>Analista
+            <input id="analista" name="analista" required placeholder="Ex.: Aluizio Deodato" autocomplete="name" />
+          </label>
+          <label>Horário da vistoria
+            <input id="dataHora" name="dataHora" type="datetime-local" required />
+          </label>
+        </div>
+
+        <fieldset>
+          <legend>Itens avaliados</legend>
+          <div class="checklist">
+            <label>Áudio <select name="audio"><option>OK</option><option>Atenção</option><option>Falha</option><option>Não se aplica</option></select></label>
+            <label>Vídeo <select name="video"><option>OK</option><option>Atenção</option><option>Falha</option><option>Não se aplica</option></select></label>
+            <label>Conteúdo / compartilhamento <select name="conteudo"><option>OK</option><option>Atenção</option><option>Falha</option><option>Não se aplica</option></select></label>
+            <label>Iluminação <select name="iluminacao"><option>OK</option><option>Atenção</option><option>Falha</option><option>Não se aplica</option></select></label>
+            <label>Ar-condicionado <select name="arCondicionado"><option>OK</option><option>Atenção</option><option>Falha</option><option>Não se aplica</option></select></label>
+            <label>Ramal <select name="ramalStatus"><option>OK</option><option>Atenção</option><option>Falha</option><option>Não possui</option><option>Não testado</option></select></label>
+          </div>
+        </fieldset>
+
+        <label>Observações
+          <textarea name="observacoes" rows="4" placeholder="Descreva falhas, evidências, ações necessárias ou detalhes do ambiente."></textarea>
+        </label>
+
+        <label>Fotos da vistoria
+          <input id="fotos" name="fotos" type="file" accept="image/*" capture="environment" multiple />
+          <small>As fotos são comprimidas e salvas localmente no navegador. Use Exportar para levar os dados.</small>
+        </label>
+        <div id="previewFotos" class="preview"></div>
+
+        <div class="actions">
+          <button type="submit">Salvar vistoria</button>
+          <button type="reset" class="secondary">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Resumo</h2>
+      <div class="kpis">
+        <div><strong id="kpiTotal">0</strong><span>Vistorias</span></div>
+        <div><strong id="kpiFalhas">0</strong><span>Com falha</span></div>
+        <div><strong id="kpiSalas">0</strong><span>Salas cadastradas</span></div>
+      </div>
+      <div class="toolbar">
+        <input id="busca" placeholder="Buscar por prédio, sala ou analista" />
+        <button id="btnLimparDados" class="danger">Apagar dados locais</button>
+      </div>
+      <div class="tableWrap">
+        <table>
+          <thead><tr><th>Data/hora</th><th>Prédio</th><th>Sala</th><th>Analista</th><th>Status geral</th><th>Fotos</th></tr></thead>
+          <tbody id="tbodyVistorias"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <template id="tplFoto"><img alt="Foto da vistoria" /></template>
+  <script src="app.js"></script>
+</body>
+</html>
